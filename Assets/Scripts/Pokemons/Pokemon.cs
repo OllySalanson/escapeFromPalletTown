@@ -23,7 +23,7 @@ public class Pokemon : PokemonBase
         {
             if(move.Level <= level)
             {
-                Moves.Add(new Move(move.Base));
+                Moves.Add(new Move(move.MoveBase));
             }
 
             if(Moves.Count >= 4){

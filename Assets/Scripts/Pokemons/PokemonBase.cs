@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Pokemon", menuName = "Pokemon/Create new pokemon")]
 public class PokemonBase : ScriptableObject
 {
-    [SerializeField] string name;
+    [SerializeField] new string name;
 
     [TextArea]
     [SerializeField] string description;
@@ -113,7 +113,7 @@ public class LearnableMove
     [SerializeField] MoveBase moveBase;
     [SerializeField] int level;
 
-    public MoveBase Base
+    public MoveBase MoveBase
     {
         get { return moveBase; }
     }

@@ -10,7 +10,7 @@ public class Move
     public Move(MoveBase pBase)
     {
         Base = pBase;
-        PP = pBase.pp;
+        PP = pBase.Pp;
     }
 
 }
