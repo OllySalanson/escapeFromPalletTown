@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Growl
   m_EditorClassIdentifier: 
   name: 
-  description: 
-  type: 0
+  description: left power to 0 because it's a status
+  type: 1
   power: 0
-  accuracy: 0
-  pp: 0
+  accuracy: 100
+  pp: 40
