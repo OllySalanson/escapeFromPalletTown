@@ -9666,6 +9666,7 @@ MonoBehaviour:
   enemyUnit: {fileID: 1994290375}
   playerHud: {fileID: 2099118309}
   enemyHud: {fileID: 428200259}
+  dialogBox: {fileID: 720640271}
 --- !u!1 &381142759
 GameObject:
   m_ObjectHideFlags: 0
@@ -10164,6 +10165,7 @@ GameObject:
   - component: {fileID: 720640268}
   - component: {fileID: 720640270}
   - component: {fileID: 720640269}
+  - component: {fileID: 720640271}
   m_Layer: 0
   m_Name: DialogBox
   m_TagString: Untagged
@@ -10228,6 +10230,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720640267}
   m_CullTransparentMesh: 0
+--- !u!114 &720640271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720640267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc053578eecf30449056a5b30f67fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogText: {fileID: 1229963206}
 --- !u!1 &771492560
 GameObject:
   m_ObjectHideFlags: 0
