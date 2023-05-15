@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c3be5baff533a4b8748f336c942a59, type: 3}
   m_Name: Growl
   m_EditorClassIdentifier: 
-  name: 
+  name: Growl
   description: left power to 0 because it's a status
   type: 1
   power: 0
