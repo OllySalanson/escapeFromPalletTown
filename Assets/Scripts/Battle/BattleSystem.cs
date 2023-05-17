@@ -212,6 +212,10 @@ public class BattleSystem : MonoBehaviour
                 currentMove -= 2;
         }
 
+        //solution to stop out of bounds exception when the second pokemon has less moves than the first pokemon, see chatGPT chat
+        currentMove = Mathf.Clamp(currentMove, 0, playerUnit.Pokemon.Moves.Count - 1);
+
+
         dialogBox.UpdateMoveSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]);
 
         if (Input.GetKeyDown(KeyCode.Return))
