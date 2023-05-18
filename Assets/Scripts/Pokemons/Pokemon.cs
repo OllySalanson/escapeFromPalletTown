@@ -24,10 +24,10 @@ public class Pokemon
     public int HP {get; set;}
 
     public List<Move> Moves {get; set;}
+    public Dictionary<Stat, int> Stats { get; private set; }
 
     public void Init()
-    {
-        HP = MaxHp;
+    {  
 
         //Generate Moves
         Moves = new List<Move>();
@@ -42,37 +42,59 @@ public class Pokemon
                 break;
             }
         }
+
+        CalculateStats();
+        HP = MaxHp;
+    }
+
+    void CalculateStats()
+    {
+        //this is the actual formula used in Pokemon
+        Stats = new Dictionary<Stat, int>();
+        Stats.Add(Stat.Attack, Mathf.FloorToInt((Base.Attack * Level) / 100f) + 5);
+        Stats.Add(Stat.Defense, Mathf.FloorToInt((Base.Defense * Level) / 100f) + 5);
+        Stats.Add(Stat.SpAttack, Mathf.FloorToInt((Base.SpAttack * Level) / 100f) + 5);
+        Stats.Add(Stat.SpDefense, Mathf.FloorToInt((Base.SpDefense * Level) / 100f) + 5);
+        Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5);
+        // MaxHp adds 10 at the end instead of 5
+        MaxHp = Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10;
+    }
+
+    int GetStat(Stat stat)
+    {
+        int statVal = Stats[stat];
+
+        //TODO: Apply stat boost
+
+        return statVal;
     }
 
     public int Attack{
-        //this is the actual formula used in Pokemon
-        get {return Mathf.FloorToInt((Base.Attack * Level) / 100f) + 5;}
+        
+        get { return GetStat(Stat.Attack); }
     }
     public int Defense
     {
-        get { return Mathf.FloorToInt((Base.Defense * Level) / 100f) + 5; }
+        get { return GetStat(Stat.Defense); }
     }
 
     public int SpAttack
     {
-        get { return Mathf.FloorToInt((Base.SpAttack * Level) / 100f) + 5; }
+        get { return GetStat(Stat.SpAttack); }
     }
 
     public int SpDefense
     {
-        get { return Mathf.FloorToInt((Base.SpDefense * Level) / 100f) + 5; }
+        get { return GetStat(Stat.SpDefense); }
     }
 
     public int Speed
     {
-        get { return Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5; }
+        get { return GetStat(Stat.Speed); }
     }
 
-    // MaxHp adds 10 at the end instead of 5
-    public int MaxHp
-    {
-        get { return Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10; }
-    }
+    
+    public int MaxHp { get; private set; }
 
     public DamageDetails TakeDamage(Move move, Pokemon attacker)
     {
