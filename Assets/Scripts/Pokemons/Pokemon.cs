@@ -25,10 +25,10 @@ public class Pokemon
 
     public List<Move> Moves {get; set;}
     public Dictionary<Stat, int> Stats { get; private set; }
+    public Dictionary<Stat, int> StatBoosts { get; private set; }
 
     public void Init()
     {  
-
         //Generate Moves
         Moves = new List<Move>();
         foreach(var move in Base.LearnableMoves)
@@ -45,6 +45,15 @@ public class Pokemon
 
         CalculateStats();
         HP = MaxHp;
+
+        StatBoosts = new Dictionary<Stat, int>() 
+        {
+            {Stat.Attack, 0},
+            {Stat.Defense, 0},
+            {Stat.SpAttack, 0},
+            {Stat.SpDefense, 0},
+            {Stat.Speed, 0},
+        };
     }
 
     void CalculateStats()
@@ -65,8 +74,27 @@ public class Pokemon
         int statVal = Stats[stat];
 
         //TODO: Apply stat boost
+        int boost = StatBoosts[stat];
+        var boostValues = new float[] { 1f, 1.5f, 2f, 2.5f, 3f, 3.5f, 4f };
 
+        if (boost >= 0)
+            statVal = Mathf.FloorToInt(statVal * boostValues[boost]);
+        else
+            statVal = Mathf.FloorToInt(statVal / boostValues[-boost]);
         return statVal;
+    }
+
+    public void ApplyBoosts(List<StatBoost> statBoosts)
+    {
+        foreach(var statBoost in statBoosts)
+        {
+            var stat = statBoost.stat;
+            var boost = statBoost.boost;
+
+            StatBoosts[stat] = Mathf.Clamp(StatBoosts[stat] + boost, -6, 6);
+            Debug.Log($"{stat} has been boosted to {StatBoosts[stat]}");
+
+        }
     }
 
     public int Attack{
@@ -111,8 +139,8 @@ public class Pokemon
             Fainted = false
         };
 
-        float attack = (move.Base.IsSpecial) ? attacker.SpAttack : attacker.Attack;
-        float defense = (move.Base.IsSpecial) ? SpDefense : Defense;
+        float attack = (move.Base.Category == MoveCategory.Special) ? attacker.SpAttack : attacker.Attack;
+        float defense = (move.Base.Category == MoveCategory.Special) ? SpDefense : Defense;
 
         float modifiers = Random.Range(0.85f, 1f) * type * critical;
         float a = (2 * attacker.Level + 10) / 250f;
