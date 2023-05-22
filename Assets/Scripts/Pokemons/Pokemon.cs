@@ -63,7 +63,7 @@ public class Pokemon
         Stats.Add(Stat.SpDefense, Mathf.FloorToInt((Base.SpDefense * Level) / 100f) + 5);
         Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5);
         // MaxHp adds 10 at the end instead of 5
-        MaxHp = Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10;
+        MaxHp = Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10 + Level;
     }
 
     void ResetStatBoost()
@@ -173,6 +173,8 @@ public class Pokemon
     }
     public void SetStatus(ConditionID conditionId)
     {
+        if (Status != null) return;
+
         Status = ConditionsDB.Conditions[conditionId];
         Status?.OnStart?.Invoke(this);
         StatusChanges.Enqueue($"{Base.Name} {Status.StartMessage}");
