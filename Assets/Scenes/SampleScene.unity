@@ -13354,9 +13354,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wildPokemons:
-  - _base: {fileID: 11400000, guid: 79b9f8610b5bad145994cf4f595365ad, type: 2}
+  - _base: {fileID: 11400000, guid: d1dca8309580bf742ac61bd363fd8a37, type: 2}
     level: 5
-  - _base: {fileID: 11400000, guid: 79b9f8610b5bad145994cf4f595365ad, type: 2}
+  - _base: {fileID: 11400000, guid: 6decf88a1c76fe741a55d99d1523b084, type: 2}
+    level: 5
+  - _base: {fileID: 11400000, guid: 6decf88a1c76fe741a55d99d1523b084, type: 2}
+    level: 7
+  - _base: {fileID: 11400000, guid: 7546fab6673fad847896c1c6848b7f95, type: 2}
+    level: 7
+  - _base: {fileID: 11400000, guid: 807dfd3d032d21b47806768d843bff64, type: 2}
     level: 7
 --- !u!1 &2099118305
 GameObject:
