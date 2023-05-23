@@ -31,6 +31,8 @@ public class Pokemon
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
     public bool HpChanged { get; set; }
 
+    public event System.Action OnStatusChanged;
+
     public void Init()
     {  
         //Generate Moves
@@ -178,11 +180,13 @@ public class Pokemon
         Status = ConditionsDB.Conditions[conditionId];
         Status?.OnStart?.Invoke(this);
         StatusChanges.Enqueue($"{Base.Name} {Status.StartMessage}");
+        OnStatusChanged?.Invoke();
     }
 
     public void CureStatus()
     {
         Status = null;
+        OnStatusChanged?.Invoke();
     }
 
     public Move GetRandomMove()
