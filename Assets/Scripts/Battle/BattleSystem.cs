@@ -15,7 +15,6 @@ public class BattleSystem : MonoBehaviour
     public event Action<bool> OnBattleOver;
 
     BattleState state;
-    //if currentAction = 0 then fight, if currentAction 1 then run
     int currentAction;
     int currentMove;
     int currentMember;
@@ -112,6 +111,7 @@ public class BattleSystem : MonoBehaviour
         if(!canRunMove)
         {
             yield return ShowStatusChanges(sourceUnit.Pokemon);
+            yield return sourceUnit.Hud.UpdateHP();
             yield break;
         }
         yield return ShowStatusChanges(sourceUnit.Pokemon);
@@ -176,6 +176,12 @@ public class BattleSystem : MonoBehaviour
         if(effects.Status != ConditionID.none)
         {
             target.SetStatus(effects.Status);
+        }
+
+        // Volatile Status Condition
+        if (effects.VolatileStatus != ConditionID.none)
+        {
+            target.SetVolatileStatus(effects.VolatileStatus);
         }
 
         yield return ShowStatusChanges(source);

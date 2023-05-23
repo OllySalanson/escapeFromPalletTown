@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ConditionsDB
 {
-
     public static void Init()
     {
         foreach (var kvp in Conditions)
@@ -51,8 +50,7 @@ public class ConditionsDB
                 StartMessage = "has been paralyzed",
                 OnBeforeMove = (Pokemon pokemon) =>
                 {
-                    //1 in 4 times, a paralyzed pokemon will not be able to perform a move
-                    if(Random.Range(1, 5) == 1)
+                    if (Random.Range(1, 5) == 1)
                     {
                         pokemon.StatusChanges.Enqueue($"{pokemon.Base.Name}'s paralyzed and can't move");
                         return false;
@@ -107,11 +105,47 @@ public class ConditionsDB
                     return false;
                 }
             }
+        },
+
+        //Volatile Status Conditions
+        {
+            ConditionID.confusion,
+            new Condition()
+            {
+                Name = "Confusion",
+                StartMessage = "has been confused",
+                OnStart = (Pokemon pokemon) =>
+                {
+                    //Confused for 1-4 turns
+                    pokemon.VolatileStatusTime = Random.Range(1,5);
+                    Debug.Log($"Will be confused for {pokemon.VolatileStatusTime} moves");
+                },
+                OnBeforeMove = (Pokemon pokemon) =>
+                {
+                    if(pokemon.VolatileStatusTime <= 0)
+                    {
+                        pokemon.CureVolatileStatus();
+                        pokemon.StatusChanges.Enqueue($"{pokemon.Base.Name} kicked out of confusion!");
+                        return true;
+                    }
+                    pokemon.VolatileStatusTime--;
+
+                    //50% chance to do a move
+                    if(Random.Range(1,3) == 1)
+                        return true;
+
+                    pokemon.StatusChanges.Enqueue($"{pokemon.Base.Name} is confused");
+                    pokemon.UpdateHP(pokemon.MaxHp / 8);
+                    pokemon.StatusChanges.Enqueue($"it hurt itself due to confusion");
+                    return false;
+                }
+            }
         }
     };
 }
 
 public enum ConditionID
 {
-    none, psn, brn, slp, par, frz
+    none, psn, brn, slp, par, frz,
+    confusion
 }
